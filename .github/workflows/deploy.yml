@@ -23,6 +23,14 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
 
+      - name: Cache node modules
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ matrix.node }}-node_modules-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ matrix.node }}-node_modules-
+
       - name: Instalar dependencias
         run: npm install
 
@@ -33,7 +41,7 @@ jobs:
         run: npm run build
 
       - name: Upload artifact
-        if: ${{ matrix.os == 'ubuntu-latest' && matrix.node == 18 }}
+        if: ${{ matrix.os == 'ubuntu-latest' && matrix.node == 20 }}
         uses: actions/upload-pages-artifact@v3
         with:
           path: public/
