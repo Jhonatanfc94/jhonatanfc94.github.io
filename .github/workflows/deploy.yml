@@ -40,6 +40,9 @@ jobs:
       - name: Build page
         run: npm run build
 
+      - name: git hub summary
+        run: echo "## Summary" >> $GITHUB_STEP_SUMMARY
+
       - name: Upload artifact
         if: ${{ matrix.os == 'ubuntu-latest' && matrix.node == 20 }}
         uses: actions/upload-pages-artifact@v3
